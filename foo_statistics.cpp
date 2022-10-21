@@ -17,7 +17,7 @@ static constexpr const char* component_name = "Statistics";
 
 DECLARE_COMPONENT_VERSION(
 	component_name,
-	"1.0",
+	"1.1",
 	"grimes\n\n"
 	"Build: " __TIME__ ", " __DATE__
 );
