@@ -3,10 +3,10 @@ For `foobar2000` `v2` and newer: Collects all kind of foobar2000 statistics and 
 
 ## Building from source
 Requirements:
-* https://www.foobar2000.org/SDK
+https://www.foobar2000.org/SDK
 
 ## Download Component
-* https://www.foobar2000.org/components/view/foo_statistics
+https://www.foobar2000.org/components/view/foo_statistics
 
 ## Download foobar2000
-* https://www.foobar2000.org/download
+https://www.foobar2000.org/download
