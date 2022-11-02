@@ -17,7 +17,7 @@ static constexpr const char* component_name = "Statistics";
 
 DECLARE_COMPONENT_VERSION(
 	component_name,
-	"1.2",
+	"1.3",
 	"grimes\n\n"
 	"Build: " __TIME__ ", " __DATE__
 );
@@ -669,10 +669,10 @@ static const GUID guid_cfg_main_monitor_events_enabled = { 0x2fbf9e5c, 0xba45, 0
 cfg_bool cfg_main_monitor_events_enabled(guid_cfg_main_monitor_events_enabled, false);
 
 VOID CALLBACK Startup(
-	HWND hwnd,        // handle to window for timer messages
-	UINT message,     // WM_TIMER message
-	UINT idEvent3,     // timer identifier
-	DWORD dwTime)     // current system time
+	HWND,        // handle to window for timer messages
+	UINT,     // WM_TIMER message
+	UINT,     // timer identifier
+	DWORD)     // current system time
 {
 	startup_time++;
 	cfg_startup_time = cfg_startup_time + 1;
@@ -1417,7 +1417,7 @@ public:
 	}
 	// The standard version of this command does not support checked or disabled
 	// commands, so we use our own version.
-	virtual bool get_display(t_uint32 p_index, pfc::string_base& p_text, t_uint32& p_flags)
+	virtual bool get_display(t_uint32 p_index, pfc::string_base& p_text, t_uint32&)
 	{
 		if (p_index == 0) {
 			get_name(p_index, p_text);
@@ -1429,7 +1429,7 @@ public:
 	}
 	virtual t_uint32 get_sort_priority()
 	{
-		return sort_priority_dontcare;
+		return 0x80000000;
 	}
 };
 
@@ -1855,7 +1855,7 @@ public:
 			console::info("playback: on_playback_seek");
 		}
 	}
-	virtual void on_playback_pause(bool p_state)
+	virtual void on_playback_pause(bool)
 	{
 		playback_pause++;
 		cfg_playback_pause = cfg_playback_pause + 1;
@@ -1864,7 +1864,7 @@ public:
 			console::info("playback: on_playback_pause");
 		}
 	}
-	virtual void on_playback_starting(play_control::t_track_command p_command, bool p_paused)
+	virtual void on_playback_starting(play_control::t_track_command p_command, bool)
 	{
 		playback_starting++;
 		cfg_playback_starting = cfg_playback_starting + 1;
@@ -1941,7 +1941,7 @@ public:
 			console::info("playback: on_playback_edited");
 		}
 	}
-	virtual void on_playback_dynamic_info(const file_info& info)
+	virtual void on_playback_dynamic_info(const file_info&)
 	{
 		playback_dynamic_info++;
 		cfg_playback_dynamic_info = cfg_playback_dynamic_info + 1;
@@ -1950,7 +1950,7 @@ public:
 			console::info("playback: on_playback_dynamic_info");
 		}
 	}
-	virtual void on_playback_dynamic_info_track(const file_info& info)
+	virtual void on_playback_dynamic_info_track(const file_info&)
 	{
 		playback_dynamic_info_track++;
 		cfg_playback_dynamic_info_track = cfg_playback_dynamic_info_track + 1;
@@ -1990,11 +1990,11 @@ public:
 	{
 		return (flag_on_items_selection_change | flag_on_item_focus_change | flag_on_playlist_activate);
 	}
-	virtual void on_items_added(t_size p_playlist, t_size p_start, const pfc::list_base_const_t<metadb_handle_ptr>& p_data, const bit_array& p_selection) {}
-	virtual void on_items_reordered(t_size p_playlist, const t_size* p_order, t_size p_count) {}
-	virtual void on_items_removing(t_size p_playlist, const bit_array& p_mask, t_size p_old_count, t_size p_new_count) {}
-	virtual void on_items_removed(t_size p_playlist, const bit_array& p_mask, t_size p_old_count, t_size p_new_count) {}
-	virtual void on_items_selection_change(t_size p_playlist, const bit_array& p_affected, const bit_array& p_state)
+	virtual void on_items_added(t_size, t_size, const pfc::list_base_const_t<metadb_handle_ptr>&, const bit_array&) {}
+	virtual void on_items_reordered(t_size, const t_size*, t_size) {}
+	virtual void on_items_removing(t_size, const bit_array&, t_size, t_size) {}
+	virtual void on_items_removed(t_size, const bit_array&, t_size, t_size) {}
+	virtual void on_items_selection_change(t_size, const bit_array&, const bit_array&)
 	{
 		items_selection_change++;
 		cfg_items_selection_change = cfg_items_selection_change + 1;
@@ -2003,12 +2003,12 @@ public:
 			console::info("playlist: on_items_selection_change");
 		}
 	}
-	virtual void on_item_focus_change(t_size p_playlist, t_size p_from, t_size p_to) {}
-	virtual void on_items_modified(t_size p_playlist, const bit_array& p_mask) {}
-	virtual void on_items_modified_fromplayback(t_size p_playlist, const bit_array& p_mask, play_control::t_display_level p_level) {};
-	virtual void on_items_replaced(t_size p_playlist, const bit_array& p_mask, const pfc::list_base_const_t<t_on_items_replaced_entry>& p_data) {}
-	virtual void on_item_ensure_visible(t_size p_playlist, t_size p_idx) {}
-	virtual void on_playlist_activate(t_size p_old, t_size p_new)
+	virtual void on_item_focus_change(t_size, t_size, t_size) {}
+	virtual void on_items_modified(t_size, const bit_array&) {}
+	virtual void on_items_modified_fromplayback(t_size, const bit_array&, play_control::t_display_level) {};
+	virtual void on_items_replaced(t_size, const bit_array&, const pfc::list_base_const_t<t_on_items_replaced_entry>&) {}
+	virtual void on_item_ensure_visible(t_size, t_size) {}
+	virtual void on_playlist_activate(t_size, t_size)
 	{
 		playlist_activate++;
 		cfg_playlist_activate = cfg_playlist_activate + 1;
@@ -2017,7 +2017,7 @@ public:
 			console::info("playlist: on_playlist_activate");
 		}
 	}
-	virtual void on_playlist_created(t_size p_index, const char* p_name, t_size p_name_len)
+	virtual void on_playlist_created(t_size, const char*, t_size)
 	{
 		playlist_created++;
 		cfg_playlist_created = cfg_playlist_created + 1;
@@ -2026,7 +2026,7 @@ public:
 			console::info("playlist: on_playlist_created");
 		}
 	}
-	virtual void on_playlists_reorder(const t_size* p_order, t_size p_count)
+	virtual void on_playlists_reorder(const t_size*, t_size)
 	{
 		playlists_reorder++;
 		cfg_playlists_reorder = cfg_playlists_reorder + 1;
@@ -2035,8 +2035,8 @@ public:
 			console::info("playlist: on_playlists_reorder");
 		}
 	}
-	virtual void on_playlists_removing(const bit_array& p_mask, t_size p_old_count, t_size p_new_count) {}
-	virtual void on_playlists_removed(const bit_array& p_mask, t_size p_old_count, t_size p_new_count)
+	virtual void on_playlists_removing(const bit_array&, t_size, t_size) {}
+	virtual void on_playlists_removed(const bit_array&, t_size, t_size)
 	{
 		playlists_removed++;
 		cfg_playlists_removed = cfg_playlists_removed + 1;
@@ -2045,7 +2045,7 @@ public:
 			console::info("playlist: on_playlists_removed");
 		}
 	}
-	virtual void on_playlist_renamed(t_size p_index, const char* p_new_name, t_size p_new_name_len)
+	virtual void on_playlist_renamed(t_size, const char*, t_size)
 	{
 		playlist_renamed++;
 		cfg_playlist_renamed = cfg_playlist_renamed + 1;
@@ -2055,7 +2055,7 @@ public:
 		}
 	}
 	virtual void on_default_format_changed() {}
-	virtual void on_playback_order_changed(t_size p_new_index)
+	virtual void on_playback_order_changed(t_size)
 	{
 		playback_order_changed++;
 		cfg_playback_order_changed = playback_order_changed + 1;
@@ -2064,7 +2064,7 @@ public:
 			console::info("playlist: on_playback_order_changed");
 		}
 	}
-	virtual void on_playlist_locked(t_size p_playlist, bool p_locked) {}
+	virtual void on_playlist_locked(t_size, bool) {}
 
 };
 
