@@ -788,9 +788,9 @@ public:
 	virtual bool get_description(t_uint32 p_index, pfc::string_base& p_out)
 	{
 		if (p_index == 0)
-			p_out = "Print statistics to console total";
+			p_out = "Print statistics to console total.";
 		if (p_index == 1)
-			p_out = "Print statistics to console session";
+			p_out = "Print statistics to console session.";
 		else
 			return false;
 		return true;
